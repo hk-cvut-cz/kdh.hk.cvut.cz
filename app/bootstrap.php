@@ -19,6 +19,7 @@ $configurator->setTempDirectory(__DIR__ . '/../temp');
 $configurator->createRobotLoader()
 	->addDirectory(__DIR__)
 	->addDirectory(__DIR__ . '/../vendor/others')
+	->addDirectory(__DIR__ . '/../vendor/clevispace')
 	->register();
 
 // Create Dependency Injection container from config.neon file

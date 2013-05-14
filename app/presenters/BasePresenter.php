@@ -2,8 +2,7 @@
 
 namespace App;
 
-use Nette,
-	Model;
+use Clevispace;
 
 
 /**
@@ -11,7 +10,7 @@ use Nette,
  *
  * @property-read RepositoryContainer $orm
  */
-abstract class BasePresenter extends Nette\Application\UI\Presenter
+abstract class BasePresenter extends Clevispace\BasePresenter
 {
 
 	/**
