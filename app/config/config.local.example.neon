@@ -9,6 +9,7 @@ parameters:
 		password:
 		database:
 		charset: utf8
+		profiler: on
 
 nette:
 
