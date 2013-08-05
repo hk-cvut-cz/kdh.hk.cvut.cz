@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Nette,
-	Model;
+use Nette;
+use Clevis\Skeleton\BasePresenter;
 
 
 /**

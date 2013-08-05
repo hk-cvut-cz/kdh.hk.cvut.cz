@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Nette,
-	Model,
-	Nette\Diagnostics\Debugger;
+use Nette;
+use Nette\Diagnostics\Debugger;
+use Clevis\Skeleton\BasePresenter;
 
 
 /**
