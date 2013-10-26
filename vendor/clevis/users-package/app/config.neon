@@ -1,0 +1,16 @@
+
+# konfigurace služeb poskytovaných balíčkem
+# tento config se nahrává před configy aplikace, proto mohou být nastavení aplikací změněny
+
+parameters:
+	repositories:
+		users: Clevis\Users\UsersRepository
+
+services:
+	passwordHashCalculator: Clevis\Users\PasswordHashCalculator
+
+	authenticator: Clevis\Users\Authenticator
+
+	usersRepository:
+		class: %repositories.users%
+		factory: @orm::getRepository(users)

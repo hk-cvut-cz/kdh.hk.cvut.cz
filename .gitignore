@@ -1,0 +1,7 @@
+log/*
+temp/*
+
+.DS_Store
+!.gitignore
+!.htaccess
+/app/config/config.local.neon

@@ -1,0 +1,35 @@
+#
+# SECURITY WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+#
+# If you don't protect this directory from direct web access, anybody will be able to see your passwords.
+# http://nette.org/security-warning
+#
+parameters:
+	appNamespace: App
+	repositories: []
+
+php:
+	date.timezone: Europe/Prague
+	session.save_path: "%tempDir%/sessions"
+	# zlib.output_compression: yes
+
+nette:
+	application:
+		errorPresenter: Error
+		templateFactory: Clevis\Skeleton\TemplateFactory(Nette.templateCacheStorage)
+
+	session:
+		expiration: 14 days
+
+services:
+	router: App\Router
+
+	nette.presenterFactory: Clevis\Skeleton\PresenterFactory(%appDir%, @container, %appNamespace%)
+	templateFactory: Clevis\Skeleton\TemplateFactory(@nette.templateCacheStorage, [@container, createServiceNette__template])
+
+	dibiConnection: DibiConnection(%database%)
+
+	orm: App\RepositoryContainer(@serviceContainerFactory, %repositories%, @container)
+	serviceContainerFactory: Clevis\Skeleton\Orm\ServiceContainerFactory(@dibiConnection, @performanceHelperCache)
+	entityRelationsRegistry: Clevis\Skeleton\Orm\EntityRelationsRegistry
+	performanceHelperCache:	Nette\Caching\Cache(@cacheStorage, Orm.PerformanceHelper)
