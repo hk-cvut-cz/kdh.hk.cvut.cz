@@ -1,0 +1,25 @@
+{#content}
+<h1 n:block=title>{$game->meta->name}</h1>
+
+<h2>
+	{if $game->available}
+		K vypůjčení
+	{elseif $game->proposed}
+		O koupi této hry můžete hlasovat
+	{else}
+		Dočasně se nedá vypůjčit
+	{/if}
+</h2>
+
+<h2>Hodnocení: {$game->meta->rating|number:1}</h2>
+<h2>{$game->meta->published}</h2>
+<h2>{$game->meta->players} hráčů, {$game->meta->playtime}</h2>
+
+<img src="{$game->meta->cover}" class="cover">
+{$game->meta->description}
+
+<ul>
+	<li n:foreach="$game->meta->files as $file">
+		<a href="{$file->url}" target="_blank">{$file->name} ({$file->size})</a> {$file->date|date}
+	</li>
+</ul>

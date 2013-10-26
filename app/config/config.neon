@@ -6,7 +6,10 @@
 #
 parameters:
 	appNamespace: App
-	repositories: []
+	repositories:
+		games: App\GamesRepository
+	adminerEditor:
+		login: [mikulas.dite]
 
 php:
 	date.timezone: Europe/Prague
@@ -28,6 +31,9 @@ services:
 	templateFactory: Clevis\Skeleton\TemplateFactory(@nette.templateCacheStorage, [@container, createServiceNette__template])
 
 	dibiConnection: DibiConnection(%database%)
+
+	passwordHashCalculator: App\Rups\PasswordHashCalculator
+	authenticator: App\Rups\Authenticator
 
 	orm: App\RepositoryContainer(@serviceContainerFactory, %repositories%, @container)
 	serviceContainerFactory: Clevis\Skeleton\Orm\ServiceContainerFactory(@dibiConnection, @performanceHelperCache)

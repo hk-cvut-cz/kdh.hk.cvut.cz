@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Clevis;
 use Nette\DI\Container;
 use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;

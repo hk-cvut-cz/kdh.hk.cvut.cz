@@ -1,9 +1,7 @@
 {**
- * My Application layout template.
- *
- * @param string   $basePath web base path
- * @param string   $robots   tell robots how to index the content of a page (optional)
- * @param array    $flashes  flash messages
+ * @param string $basePath
+ * @param string $robots tell robots how to index the content of a page (optional)
+ * @param array $flashes
  *}
 
 <!DOCTYPE html>
@@ -13,10 +11,9 @@
 	<meta name="description" content="">
 	<meta name="robots" content="{$robots}" n:ifset="$robots">
 
-	<title>{#title|striptags|upper}Nette Application Skeleton{/#}</title>
+	<title>{#title|striptags|upper}KDH{/#}</title>
 
-	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">
-	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
+	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/style.css">
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
 	{#head}{/#}
 </head>

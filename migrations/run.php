@@ -24,7 +24,7 @@ $runner->addExtension(new OrmPhp($configurator, $context, $context->dibiConnecti
 
 $finder = new Migration\Finders\MultipleDirectories;
 $finder->addDirectory(__DIR__ . '/struct');
-if (isset($_GET['data']))
+if (php_sapi_name() === "cli" ? in_array('data', $argv) : isset($_GET['data']))
 {
 	$finder->addDirectory(__DIR__ . '/data');
 }

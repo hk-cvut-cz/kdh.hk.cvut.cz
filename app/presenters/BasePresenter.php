@@ -2,10 +2,12 @@
 
 namespace Clevis\Skeleton;
 
-use Nette;
-use StdClass;
+use App\Game;
 use App\RepositoryContainer;
 use Clevis\Skeleton\Core;
+use Nette;
+use Nette\Application\UI\Form;
+use StdClass;
 
 
 /**
@@ -26,6 +28,15 @@ abstract class BasePresenter extends Core\BasePresenter
 	public function getOrm()
 	{
 		return $this->context->getService('orm');
+	}
+
+	public function createForm($name)
+	{
+		$form = new Form;
+
+		$form->onSuccess[] = callback($this, 'onSuccess' . ucfirst($name));
+
+		return $form;
 	}
 
 }
