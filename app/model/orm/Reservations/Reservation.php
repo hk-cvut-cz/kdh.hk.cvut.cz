@@ -14,6 +14,13 @@ use Nette\DateTime;
 class Reservation extends Entity
 {
 
+	public function canBeRemoved()
+	{
+		$today = new DateTime;
+		$today->setTime(0, 0, 0);
+		return $this->date >= $today;
+	}
+
 }
 
 class ReservationException extends \Exception {}

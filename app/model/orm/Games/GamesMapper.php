@@ -17,7 +17,7 @@ class GamesMapper extends Mapper
 			LEFT JOIN [votes] [v] ON [v.game_id]=[e.id]
 			WHERE [e.status] = %s', Game::PROPOSED, '
 			GROUP BY [e.id]
-			ORDER BY Count([e.id])
+			ORDER BY Count([v.id]) DESC
 		');
 	}
 

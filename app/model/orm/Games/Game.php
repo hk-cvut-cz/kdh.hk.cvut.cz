@@ -65,6 +65,11 @@ class Game extends Entity
 
 	public function reserve(User $user, DateTime $date)
 	{
+		if (!$this->isAvailable())
+		{
+			throw new ReservationException('Hra se momentálně nedá vypůjčit.');
+		}
+
 		$reservation = $this->reservations->add([
 			'user' => $user,
 			'date' => $date,
@@ -78,7 +83,7 @@ class Game extends Entity
 			if ($e->getCode() !== 1062) {
 				throw $e;
 			} else {
-				throw new ReservationException("Game is already reserved for " . $date->format('Y-m-d'));
+				throw new ReservationException("Hra už je na datum " . $date->format('j. n. Y') . " zarezervovaná.");
 			}
 		}
 	}

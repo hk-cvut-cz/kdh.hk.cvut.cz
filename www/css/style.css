@@ -1,8 +1,15 @@
 a[href^="error:"]{background:#f00;color:#fff}
+html,body{height:100%;}
+.container:first-of-type{min-height:100%;height:auto !important;height:100%;margin:0 auto -92px;padding:0 0 192px}
+#footer{height:92px}#footer .push-up{display:block;height:60px;margin-bottom:32px;background-color:#f5f5f5;padding:15px;border-radius:4px}
 .cover{max-width:200px;max-height:200px}.cover.small{max-width:32px;max-height:32px;position:absolute;margin-top:-6px;margin-left:12px}
 tr .hover-opacity{opacity:.4}
 tr:hover .hover-opacity{opacity:1}
+.game-meta .thumbnail{margin-bottom:20px}
+.game-files{margin-top:20px}.game-files a{padding:5px 15px}
+.game .reservations{margin:20px 0 30px 0}
 .navbar-default .navbar-nav>li>a.navbar-btn{padding:6px 8px 5px 8px;margin-right:15px}
+.navbar-default .navbar-nav>li>a.btn-primary{color:#fff}.navbar-default .navbar-nav>li>a.btn-primary:hover{color:#285e8e}
 .navbar-pushed{margin-top:32px}
 .column-cover{width:48px}
 .datepicker table thead tr th:hover,.datepicker table tbody tr td.old:hover{cursor:default;background-color:inherit !important}

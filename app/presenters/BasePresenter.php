@@ -7,6 +7,7 @@ use App\RepositoryContainer;
 use Clevis\Skeleton\Core;
 use Nette;
 use Nette\Application\UI\Form;
+use Nette\Utils\Html;
 use StdClass;
 
 
@@ -58,27 +59,51 @@ abstract class BasePresenter extends Core\BasePresenter
 		return $template;
 	}
 
-	public function flashSuccess($message)
+	public function flashMessage($message, $style = NULL, $title = NULL)
 	{
-		$this->flashMessage($message, 'success');
+		$flash = Html::el();
+		$flash->add(Html::el('strong')->setText($title));
+		$flash->add(Html::el('')->setHtml('&nbsp;'));
+		$flash->add(Html::el('')->setText($message));
+		parent::flashMessage($flash, $style);
 	}
 
-	public function flashError($message)
+	public function flashSuccess($message, $title = NULL)
 	{
-		$this->flashMessage($message, 'danger');
+		$this->flashMessage($message, 'success', $title);
+	}
+
+	public function flashError($message, $title = NULL)
+	{
+		$this->flashMessage($message, 'danger', $title);
 	}
 
 	public function handleCancel($reservation)
 	{
 		$reservation = $this->orm->reservations->getById($reservation);
-		if ($this->userEntity !== $reservation->user) {
-			$this->error(); // @todo throw denied not 404
+		if (!$reservation)
+		{
+			$this->error();
+		}
+		elseif ($this->userEntity !== $reservation->user)
+		{
+			$this->deny();
+		}
+
+		if (!$reservation->canBeRemoved())
+		{
+			$this->deny();
 		}
 
 		$this->orm->reservations->remove($reservation);
 		$this->orm->flush();
-		$this->flashSuccess('Rezervace byla zrušena.');
+		$this->flashSuccess('Pokud si to rozmyslíš, klidně si hru zarezervuj znovu.', 'Zrušeno.');
 		$this->redirect('this');
+	}
+
+	public function deny()
+	{
+		$this->error(NULL, Nette\Http\Response::S401_UNAUTHORIZED);
 	}
 
 }

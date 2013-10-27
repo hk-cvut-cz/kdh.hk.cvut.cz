@@ -17,9 +17,9 @@ class GamesRepository extends Repository
 		return $this->model->getContext()->getService('gameMeta');
 	}
 
-	public function findProposed()
+	public function findAvailable()
 	{
-		return $this->findAll()->where('status = ?', Game::PROPOSED);
+		return $this->findAll()->where('status = ?', Game::AVAILABLE);
 	}
 
 }

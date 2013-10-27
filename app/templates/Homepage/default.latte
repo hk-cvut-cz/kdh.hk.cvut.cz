@@ -1,11 +1,19 @@
 {#content}
 
-<h1>todo voting na nove hry</h1>
-<h1>todo style</h1>
-<h1>chci hrat button</h1>
+{if $user->loggedIn && $userEntity->login === 'mikulas.dite'}
+	<h1>TODO:</h1>
+	<ul>
+		<li>na vote page zobrazit, kolik % ze vsech votes hra ma</li>
+		<li>na vote page zobrazit bar nebo pie chart</li>
+		<li>na sign in formu dat link na forgotten pass</li>
+		<li>dat do footeru quotes (http://boardgamegeek.com/blogpost/10430/good-quotes-for-us-gaming-geeks/)</li>
+		<li>dat live</li>
+		<li>doplnit vsechny hry</li>
+		<li>chci hrat button</li>
+	</ul>
+{/if}
 
-{if $reservations->count()}
-	<h2>Moje rezervace</h2>
+{if $user->loggedIn && $reservations->count()}
 	{include '../_reservations.latte', reservations => $reservations}
 {/if}
 
@@ -19,7 +27,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr n:foreach="$games as $game" n:class="$game->broken ? danger, $game->purchased ? warning, $game->available ? success">
+		<tr n:foreach="$games as $game">
 			<td class="column-cover">
 				<a n:href="Game:, id => $game->id">
 					<img src="{$game->meta->cover}" class="cover small">

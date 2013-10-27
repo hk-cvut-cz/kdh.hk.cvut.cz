@@ -1,4 +1,5 @@
 @import "nette.less";
+@import "footer.less";
 
 .cover {
 	max-width: 200px;
@@ -22,9 +23,35 @@ tr {
 	}
 }
 
+.game-meta {
+	.thumbnail {
+		margin-bottom: 20px;
+	}
+}
+
+.game-files {
+	margin-top: 20px;
+	a {
+		padding: 5px 15px;
+	}
+}
+
+.game {
+	.reservations {
+		margin: 20px 0 30px 0;
+	}
+}
+
 .navbar-default .navbar-nav>li>a.navbar-btn {
 	padding: 6px 8px 5px 8px;
 	margin-right: 15px;
+}
+
+.navbar-default .navbar-nav>li>a.btn-primary {
+	color: #fff;
+	&:hover {
+		color: #285e8e;
+	}
 }
 
 .navbar-pushed {

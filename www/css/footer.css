@@ -1,0 +1,3 @@
+html,body{height:100%;}
+.container:first-of-type{min-height:100%;height:auto !important;height:100%;margin:0 auto -92px;padding:0 0 192px}
+#footer{height:92px}#footer .push-up{display:block;height:60px;margin-bottom:32px;background-color:#f5f5f5;padding:15px;border-radius:4px}

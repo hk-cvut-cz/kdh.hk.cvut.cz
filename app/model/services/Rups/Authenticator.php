@@ -14,36 +14,21 @@ use Orm\EntityToArray;
 class Authenticator extends Object implements Security\IAuthenticator
 {
 
-	const URL = 'http://kdh.hk.cvut.cz/rups-proxy.php';
-
 	/** @var UsersRepository */
 	private $users;
 
 	/** @var PasswordHashCalculator */
 	private $calculator;
 
+	/** @var Repository */
+	private $rups;
 
-	public function __construct(UsersRepository $users, PasswordHashCalculator $calculator)
+
+	public function __construct(UsersRepository $users, PasswordHashCalculator $calculator, Repository $rups)
 	{
 		$this->users = $users;
 		$this->calculator = $calculator;
-	}
-
-	/**
-	 * @todo add caching (2 min+ ?)
-	 */
-	public function getStaticRepository()
-	{
-		$raw = file_get_contents(self::URL);
-		$json = substr($raw, 1, -1);
-		$data = json_decode($json)->results;
-
-		$repo = [];
-		foreach ($data as $row)
-		{
-			$repo[$row->Login] = $row;
-		}
-		return $repo;
+		$this->rups = $rups;
 	}
 
 	/**
@@ -56,17 +41,17 @@ class Authenticator extends Object implements Security\IAuthenticator
 		$username = $args[self::USERNAME];
 		$password = $args[self::PASSWORD];
 
-		$repo = $this->getStaticRepository();
+		$repo = $this->rups->getStaticRepository();
 
 		if (!isset($repo[$username]))
 		{
-			throw new Security\AuthenticationException('Username does not exist.');
+			throw new Security\AuthenticationException('Uživatelské jméno neexistuje.');
 		}
 
 		$rupsUser = $repo[$username];
 		if (!$this->calculator->verify($password, $rupsUser->Login, $rupsUser->Password))
 		{
-			throw new Security\AuthenticationException('Wrong password.');
+			throw new Security\AuthenticationException('Nesprávné heslo.');
 		}
 
 		if (!$user = $this->users->getByRupsId($rupsUser->idUser))
@@ -74,7 +59,7 @@ class Authenticator extends Object implements Security\IAuthenticator
 			$user = $this->users->insertFromRups($rupsUser);
 		}
 
-		return new Security\Identity($user->id, NULL, $user);
+		return new Security\Identity($user->id, NULL, NULL);
 	}
 
 }

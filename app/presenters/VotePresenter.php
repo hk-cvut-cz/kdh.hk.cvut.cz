@@ -11,16 +11,16 @@ use Nette\DateTime;
 class VotePresenter extends BasePresenter
 {
 
-	const VOTES_PER_USER = 1;
-
 	public function renderDefault()
 	{
 		$this->template->games = $this->orm->games->findProposedByVotes();
 
 		$votedFor = [];
-		foreach ($this->userEntity->votes as $vote)
-		{
-			$votedFor[] = $vote->game;
+		if ($this->user->loggedIn) {
+			foreach ($this->userEntity->votes as $vote)
+			{
+				$votedFor[] = $vote->game;
+			}
 		}
 		$this->template->votedFor = $votedFor;
 	}

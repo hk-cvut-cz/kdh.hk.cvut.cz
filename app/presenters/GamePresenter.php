@@ -49,8 +49,17 @@ class GamePresenter extends BasePresenter
 		$this->template->disabledDays = $disabledDays;
 		$this->template->highlitDays = $highlitDays;
 
-		$this->template->reservations = $this->userEntity->reservations->get()
-			->where(['game = ?' => $this->game->id])->orderBy('date', 'ASC');
+		if ($this->user->loggedIn)
+		{
+			$this->template->reservations = $this->userEntity->reservations->get()
+				->where('game_id = ?', $this->game->id)
+				->where('date > Date(Now())')
+				->orderBy('date', 'ASC');
+		}
+		else
+		{
+			$this->template->backlink = $this->storeRequest();
+		}
 	}
 
 	public function createComponentReservation()
@@ -76,18 +85,37 @@ class GamePresenter extends BasePresenter
 
 	public function onSuccessReservationForm(Form $form)
 	{
-		// @TODO how many reservations user has
-		// @TODO check if reservation date is valid
+		try {
+			$date = DateTime::from($form['body-date']->value);
+		}
+		catch (\Exception $e)
+		{
+			// failed to parse date, hackers playing
+			return;
+		}
+
+		$today = new DateTime;
+		$today->setTime(0, 0, 0);
+		$max = DateTime::from('+ 1 month');
 		try
 		{
-			$date = DateTime::from($form['body-date']->value);
+			if ($date < $today)
+			{
+				throw new ReservationException('Pokoušíte se rezervovat hru na datum v minulosti.');
+			}
+			elseif ($date > $max)
+			{
+				throw new ReservationException('Pokoušíte se rezervovat hru na datum v moc daleké budoucnosti.');
+			}
+
 			$this->game->reserve($this->userEntity, $date);
-			$this->flashSuccess('Reserved');
+			$this->flashSuccess('Pokud nakonec hru nebudeš chtít, rezervaci zruš, ať je dostupná pro ostatní.', 'Rezervováno.');
 			$this->redirect('this');
 		}
 		catch (ReservationException $e)
 		{
 			$this->flashError($e->getMessage());
+			$this->redirect('this');
 		}
 	}
 

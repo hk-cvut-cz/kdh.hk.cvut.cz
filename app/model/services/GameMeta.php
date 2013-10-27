@@ -27,6 +27,9 @@ class GameMeta extends Object
 
 		$request = 'http://siteapi.eu/zatrolene-hry/?' . http_build_query(array('game' => $url));
 		$res = json_decode(file_get_contents($request));
+
+		$res->description = explode("\n", $res->description);
+
 		$this->cache->save($url, $res, [
 			Cache::EXPIRE => '+1 week',
 		]);

@@ -1,14 +1,69 @@
 {#content}
-<h1 n:block=title>{$game->meta->name}</h1>
 
-{control reservation:button, 'Rezervovat'}
-{control reservation, 'Rezervace ' . $game->meta->name, $disabledDays, $highlitDays}
+<div class="row game">
+	<div class="col-md-9">
+		<h1 n:block="title">{$game->meta->name}</h1>
 
-{if $reservations->count()}
-	{include '../_reservations.latte', reservations => $reservations}
-{/if}
+		<p>
+			{if $user->loggedIn}
+				{control reservation:button, 'Rezervovat'}
+			{else}
+				<a n:href="Sign:in, backlink => $backlink" class="btn btn-default btn-lg">Rezervovat</a>
+			{/if}
+			{control reservation, 'Rezervace ' . $game->meta->name, $disabledDays, $highlitDays}
+		</p>
 
-<h2>
+		{if $user->loggedIn && $reservations->count()}
+			{include '../_reservations.latte', reservations => $reservations}
+		{/if}
+
+		<p n:foreach="$game->meta->description as $paragraph">
+			{$paragraph}
+		</p>
+
+		<p>
+			Data jsou převzata z webu <a href="{$game->meta->url}" target="blank">zatrolene-hry.cz</a>.
+		</p>
+	</div>
+	<div class="col-md-3 game-meta pull-right hidden-sm hidden-xs">
+		<img src="{$game->meta->cover}" class="thumbnail">
+		<ul class="list-group">
+			{var $r = $game->meta->rating}
+			<li class="list-group-item">
+				Hodnocení: <span n:class="$r > 8 ? text-success : ($r < 6 ? text-danger)">{$r|number:1}</span>
+			</li>
+			<li class="list-group-item">
+				{$game->meta->players} hráčů, {$game->meta->playtime}
+			</li>
+			<li class="list-group-item">
+				Vydáno: {$game->meta->published}
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-8">
+		<ul class="hidden-xs">
+			{* <li n:foreach="$game->meta->files as $file">
+				<a href="{$file->url}" target="_blank">{$file->name} ({$file->size})</a> {$file->date|date}
+			</li> *}
+
+			<div class="list-group game-files">
+				<a n:foreach="$game->meta->files as $file" href="{$file->url}" class="list-group-item row">
+					<span class="col-md-7">{$file->name}</span>
+					<span class="col-md-3">
+						<span class="pull-right">{$file->date|localDate}</span>
+					</span>
+					<span class="col-md-2">
+						<span class="badge pull-right">{$file->size}</span>
+					</span>
+				</a>
+			</div>
+		</ul>
+	</div>
+</div>
+
+{* <h2>
 	{if $game->available}
 		K vypůjčení
 	{elseif $game->proposed}
@@ -16,20 +71,7 @@
 	{else}
 		Dočasně se nedá vypůjčit
 	{/if}
-</h2>
-
-<h2>Hodnocení: {$game->meta->rating|number:1}</h2>
-<h2>{$game->meta->published}</h2>
-<h2>{$game->meta->players} hráčů, {$game->meta->playtime}</h2>
-
-<img src="{$game->meta->cover}" class="cover">
-{$game->meta->description}
-
-<ul>
-	<li n:foreach="$game->meta->files as $file">
-		<a href="{$file->url}" target="_blank">{$file->name} ({$file->size})</a> {$file->date|date}
-	</li>
-</ul>
+</h2> *}
 
 {/#}
 {#scripts}

@@ -1,12 +1,10 @@
 {**
  * @param Orm\IEntityCollection $reservations
  *}
-<table class="table table-hover">
+<table class="table table-hover reservations">
 	<thead>
 		<tr>
-			<th colspan="2">Hra</th>
-			<th colspan="2">Datum</th>
-			<th></th>
+			<th colspan="5">Moje rezervace</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -24,12 +22,15 @@
 			<td>
 				{$reservation->date|relativeDate}
 			</td>
-			<td>
+			<td class="hidden-xs">
 				{$reservation->date|localDate}
 			</td>
 			<td>
-				<a n:href="cancel!, reservation => $reservation->id" class="hover-opacity">
-					<span class="glyphicon glyphicon-trash"></span> zrušit rezervaci
+				<a n:href="cancel!, reservation => $reservation->id">
+					<span class="visible-xs">zrušit</span>
+					<span class="hidden-xs hover-opacity">
+						<span class="glyphicon glyphicon-trash"></span> zrušit rezervaci
+					</span>
 				</a>
 			</td>
 		</tr>

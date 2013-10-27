@@ -12,6 +12,7 @@ parameters:
 	repositories:
 		games: App\GamesRepository
 		reservations: App\ReservationsRepository
+		votes: App\VotesRepository
 
 php:
 	date.timezone: Europe/Prague
@@ -22,7 +23,6 @@ nette:
 	application:
 		errorPresenter: Error
 		templateFactory: Clevis\Skeleton\TemplateFactory(Nette.templateCacheStorage)
-
 	session:
 		expiration: 14 days
 
@@ -36,6 +36,7 @@ services:
 
 	passwordHashCalculator: App\Rups\PasswordHashCalculator
 	authenticator: App\Rups\Authenticator
+	rups: App\Rups\Repository
 
 	orm:
 		class: App\RepositoryContainer(@orm.serviceContainer, %repositories%)

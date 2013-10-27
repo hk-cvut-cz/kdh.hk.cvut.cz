@@ -11,7 +11,7 @@
 	<tbody>
 		{foreach $games as $game}
 			{var $voted = in_array($game, $votedFor)}
-			<tr n:class="$voted ? succcess">
+			<tr n:class="$voted ? success">
 				<td class="column-cover">
 					<a n:href="Game:, id => $game->id">
 						<img src="{$game->meta->cover}" class="cover small">
@@ -29,11 +29,22 @@
 					{$game->votes->count()}&thinsp;&times;
 				</td>
 				<td>
-					<a n:href="vote!, game => $game->id" n:if="!$voted">
+					<a n:href="vote!, game => $game->id" n:if="!$voted && $user->loggedIn">
 						Hlasovat
 					</a>
+					{if $voted}
+						<span class="glyphicon glyphicon-star" />
+					{/if}
 				</td>
 			</tr>
 		{/foreach}
 	</tbody>
 </table>
+
+<div class="row">
+	<p class="col-md-12">
+		{var $votes = $control->orm->votes->findAll()->count()}
+		{var $users = $control->orm->users->findAll()->count()}
+		Hlasovalo: {$votes} z {$users} ({$votes / $users * 100|number:2}&thinsp;%)
+	</p>
+</div>

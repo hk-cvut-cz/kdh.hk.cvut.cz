@@ -8,7 +8,7 @@ use Clevis\Skeleton\Repository;
 /**
  * Repository containing users
  *
- * @method User getById($id)
+ * @method Orm\IEntityCollection findAll()
  * @method User getByRupsId($id)
  */
 class UsersRepository extends Repository

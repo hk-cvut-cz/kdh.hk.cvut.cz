@@ -22,11 +22,6 @@
 <body>
 	<div class="container">
 
-		<div n:foreach="$flashes as $flash" class="alert alert-dismissable alert-{$flash->type}">
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			{$flash->message}
-		</div>
-
 		<div class="row">
 			<div class="col-md-12">
 				<nav class="navbar navbar-default navbar-pushed">
@@ -49,7 +44,7 @@
 								<p class="navbar-text">{$userEntity->name}</p>
 								<li><a n:href="Sign:out" class="btn btn-default navbar-btn">Odhlásit se</a></li>
 							{else}
-								<li><a n:href="Sign:in" class="btn btn-default navbar-btn">Přihlásit se</a></li>
+								<li><a n:href="Sign:in" class="btn btn-default navbar-btn {if !$control->isLinkCurrent('Sign:in')}btn-primary{/if}">Přihlásit se</a></li>
 							{/if}
 						</ul>
 					</div><!-- /.navbar-collapse -->
@@ -57,7 +52,28 @@
 			</div>
 		</div>
 
+		<div class="row" n:if="$flashes">
+			<div class="col-md-6 col-md-offset-3">
+				<div n:foreach="$flashes as $flash" class="alert alert-dismissable alert-{$flash->type} fade in">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					{$flash->message}
+				</div>
+			</div>
+		</div>
+
 		{include #content}
+	</div>
+	<div class="container hidden-xs" id="footer">
+		<div class="row col-md-12">
+			<div class="push-up">
+				<p class="text-muted credit pull-left">
+					Klub deskových her <a href="http://hk.cvut.cz">Hlávkovy koleje</a>.
+					Členů: {$control->orm->users->findAll()->count()}
+					Rezervací: {$control->orm->reservations->findAll()->count()}
+				</p>
+				<p class="text-muted pull-right">&copy; Mikuláš Dítě {=date(Y)}</p>
+			</div>
+		</div>
 	</div>
 
 	<script src="{$basePath}/js/jquery.js"></script>

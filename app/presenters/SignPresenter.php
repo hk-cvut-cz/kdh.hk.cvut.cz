@@ -9,8 +9,16 @@ use Clevis\Skeleton\BasePresenter;
 class SignPresenter extends BasePresenter
 {
 
+	/** @persistent */
+	public $backlink;
+
 	public function createComponentSignInForm($name)
 	{
+		if ($this->user->loggedIn)
+		{
+			$this->redirect('Homepage:');
+		}
+
 		$form = $this->createForm($name);
 
 		$form->addText('username', 'Uživatelské jméno')
@@ -25,12 +33,15 @@ class SignPresenter extends BasePresenter
 	public function onSuccessSignInForm($form)
 	{
 		$values = $form->getValues();
-		$this->getUser()->setExpiration('14 days', FALSE);
+		$this->user->setExpiration('14 days', FALSE);
 
 		try
 		{
-			$this->getUser()->login($values->username, $values->password);
-			$this->flashMessage('You have been signed in.');
+			$this->user->login($values->username, $values->password);
+			if ($this->backlink)
+			{
+				$this->restoreRequest($this->backlink);
+			}
 			$this->redirect('Homepage:');
 		}
 		catch (Nette\Security\AuthenticationException $e)
@@ -41,8 +52,8 @@ class SignPresenter extends BasePresenter
 
 	public function actionOut()
 	{
-		$this->getUser()->logout();
-		$this->flashMessage('You have been signed out.');
+		$this->user->logout(TRUE);
+		$this->flashSuccess('„Our whole life is solving puzzles.“ — Erno Rubik', 'Odhlášeno!');
 		$this->redirect('in');
 	}
 
