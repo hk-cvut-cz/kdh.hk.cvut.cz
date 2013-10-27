@@ -1,8 +1,12 @@
 
--- users table
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(250) NOT NULL,
-  `password` varchar(250) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `rups_id` int NOT NULL,
+  `login` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `surname` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL
+);
+
+ALTER TABLE `users` ADD UNIQUE `rups_id` (`rups_id`);
+ALTER TABLE `users` ADD UNIQUE `login` (`login`);

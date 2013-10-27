@@ -1,0 +1,39 @@
+{#content}
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th colspan="2">Hra</th>
+			<th>Hodnocení</th>
+			<th colspan="2">Hlasů</th>
+		</tr>
+	</thead>
+	<tbody>
+		{foreach $games as $game}
+			{var $voted = in_array($game, $votedFor)}
+			<tr n:class="$voted ? succcess">
+				<td class="column-cover">
+					<a n:href="Game:, id => $game->id">
+						<img src="{$game->meta->cover}" class="cover small">
+					</a>
+				</td>
+				<td>
+					<a n:href="Game:, id => $game->id">
+						{$game->meta->name}
+					</a>
+				</td>
+				<td>
+					{$game->meta->rating|number:1}
+				</td>
+				<td>
+					{$game->votes->count()}&thinsp;&times;
+				</td>
+				<td>
+					<a n:href="vote!, game => $game->id" n:if="!$voted">
+						Hlasovat
+					</a>
+				</td>
+			</tr>
+		{/foreach}
+	</tbody>
+</table>

@@ -97,6 +97,17 @@ class Configurator extends Nette\Configurator
 	}
 
 
+	public function onAfterLocale(SystemContainer $container)
+	{
+		if (isset($container->parameters['locale']))
+		{
+			$args = $container->parameters['locale'];
+			array_unshift($args, LC_ALL);
+			call_user_func_array('setlocale', $args);
+		}
+	}
+
+
 	/**
 	 * Zaregistruje relace entit
 	 */

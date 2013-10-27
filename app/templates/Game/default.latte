@@ -1,6 +1,13 @@
 {#content}
 <h1 n:block=title>{$game->meta->name}</h1>
 
+{control reservation:button, 'Rezervovat'}
+{control reservation, 'Rezervace ' . $game->meta->name, $disabledDays, $highlitDays}
+
+{if $reservations->count()}
+	{include '../_reservations.latte', reservations => $reservations}
+{/if}
+
 <h2>
 	{if $game->available}
 		K vypůjčení
@@ -23,3 +30,8 @@
 		<a href="{$file->url}" target="_blank">{$file->name} ({$file->size})</a> {$file->date|date}
 	</li>
 </ul>
+
+{/#}
+{#scripts}
+	{control datePicker:script}
+{/#}

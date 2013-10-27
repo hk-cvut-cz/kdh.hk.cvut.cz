@@ -1,24 +1,52 @@
 {#content}
-<table>
-	<tr n:foreach="$games as $game">
-		<td>
-			<a n:href="Game:, id => $game->id">
-				{$game->meta->name}
-			</a>
-		</td>
-		<td>
-			{$game->meta->rating|number:1}
-		</td>
-		<td>
-			{if $game->available}
-				k vypůjčení
-			{elseif $game->proposed}
-				hlasování
-			{elseif $game->purchased}
-				koupeno, na cestě
-			{elseif $game->broken}
-				hra je rozbitá
-			{/if}
-		</td>
-	</tr>
+
+<h1>todo voting na nove hry</h1>
+<h1>todo style</h1>
+<h1>chci hrat button</h1>
+
+{if $reservations->count()}
+	<h2>Moje rezervace</h2>
+	{include '../_reservations.latte', reservations => $reservations}
+{/if}
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th colspan="2">Hra</th>
+			<th>Hodnocení</th>
+			<th>Stav</th>
+			<th>Rezervací</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr n:foreach="$games as $game" n:class="$game->broken ? danger, $game->purchased ? warning, $game->available ? success">
+			<td class="column-cover">
+				<a n:href="Game:, id => $game->id">
+					<img src="{$game->meta->cover}" class="cover small">
+				</a>
+			</td>
+			<td>
+				<a n:href="Game:, id => $game->id">
+					{$game->meta->name}
+				</a>
+			</td>
+			<td>
+				{$game->meta->rating|number:1}
+			</td>
+			<td>
+				{if $game->available}
+					k vypůjčení
+				{elseif $game->proposed}
+					hlasování
+				{elseif $game->purchased}
+					koupeno, na cestě
+				{elseif $game->broken}
+					hra je rozbitá
+				{/if}
+			</td>
+			<td>
+				{$game->reservations->count()}
+			</td>
+		</tr>
+	</tbody>
 </table>

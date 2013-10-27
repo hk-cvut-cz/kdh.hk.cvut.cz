@@ -3,12 +3,16 @@
 namespace App;
 
 use Clevis\Skeleton\Entity;
+use Clevis\Users\User;
+use Nette\DateTime;
 
 
 /**
  * @property string $name
  * @property string $url
  * @property string $status {enum self::getStatuses()}
+ * @property Orm\OneToMany $reservations {1:m App\ReservationsRepository $game}
+ * @property Orm\OneToMany $votes {1:m App\VotesRepository $game}
  */
 class Game extends Entity
 {
@@ -18,9 +22,8 @@ class Game extends Entity
 	const BROKEN = 'broken';
 	const PROPOSED = 'proposed';
 
-	/** @var GameMeta */
+	/** @var mixed */
 	private $meta;
-
 
 	public static function getStatuses()
 	{
@@ -35,8 +38,7 @@ class Game extends Entity
 	public function getMeta()
 	{
 		if (!$this->meta) {
-			$obj = new GameMeta($this->url);
-			$this->meta = $obj->getByGameUrl($this->url);
+			$this->meta = $this->repository->getMetaRepository()->getByGameUrl($this->url);
 		}
 		return $this->meta;
 	}
@@ -59,6 +61,39 @@ class Game extends Entity
 	public function isProposed()
 	{
 		return $this->status === self::PROPOSED;
+	}
+
+	public function reserve(User $user, DateTime $date)
+	{
+		$reservation = $this->reservations->add([
+			'user' => $user,
+			'date' => $date,
+		]);
+
+		try {
+			$this->model->flush();
+		}
+		catch (\DibiDriverException $e)
+		{
+			if ($e->getCode() !== 1062) {
+				throw $e;
+			} else {
+				throw new ReservationException("Game is already reserved for " . $date->format('Y-m-d'));
+			}
+		}
+	}
+
+	public function vote(User $user)
+	{
+		$this->votes->add([
+			'user' => $user,
+		]);
+		$this->model->flush();
+	}
+
+	public function getUpcomingReservations()
+	{
+		return $this->reservations->get()->where('date >= Date(Now())');
 	}
 
 }

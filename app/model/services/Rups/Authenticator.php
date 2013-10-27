@@ -63,13 +63,18 @@ class Authenticator extends Object implements Security\IAuthenticator
 			throw new Security\AuthenticationException('Username does not exist.');
 		}
 
-		$user = $repo[$username];
-		if (!$this->calculator->verify($password, $user->Login, $user->Password))
+		$rupsUser = $repo[$username];
+		if (!$this->calculator->verify($password, $rupsUser->Login, $rupsUser->Password))
 		{
 			throw new Security\AuthenticationException('Wrong password.');
 		}
 
-		return new Security\Identity($user->idUser, NULL, $user);
+		if (!$user = $this->users->getByRupsId($rupsUser->idUser))
+		{
+			$user = $this->users->insertFromRups($rupsUser);
+		}
+
+		return new Security\Identity($user->id, NULL, $user);
 	}
 
 }

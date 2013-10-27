@@ -5,3 +5,5 @@ CREATE TABLE `games` (
   `url` text NOT NULL COMMENT 'Url hry',
   `status` enum('available','broken','purchased','proposed') NOT NULL COMMENT 'Stav'
 ) COMMENT 'Hry';
+
+ALTER TABLE `reservations` ADD UNIQUE `game_id_date` (`game_id`, `date`);

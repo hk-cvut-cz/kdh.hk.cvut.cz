@@ -1,0 +1,24 @@
+<div class="datepicker">
+	<div class="datepicker-days" style="display: block;">
+		<table class=" table-condensed">
+			<thead>
+				<tr>
+					<th class="dow">Po</th>
+					<th class="dow">Út</th>
+					<th class="dow">St</th>
+					<th class="dow">Čt</th>
+					<th class="dow">Pá</th>
+					<th class="dow">So</th>
+					<th class="dow">Ne</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr n:foreach="$calendar as $row">
+					<td n:foreach="$row as $day" n:class="day, $day->state" data-date="{$day->date|date}">
+						{$day->date|date:'j'}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

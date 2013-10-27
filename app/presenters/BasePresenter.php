@@ -39,4 +39,46 @@ abstract class BasePresenter extends Core\BasePresenter
 		return $form;
 	}
 
+	public function getUserEntity()
+	{
+		return $this->orm->users->getById($this->user->id);
+	}
+
+	public function beforeRender()
+	{
+		$this->template->userEntity = $this->userEntity;
+	}
+
+	public function createTemplate($class = NULL)
+	{
+		$template = parent::createTemplate($class);
+		$template->registerHelper('relativeDate', 'App\TemplateHelpers::dateAgoInWords');
+		$template->registerHelper('relativeTime', 'App\TemplateHelpers::timeAgoInWords');
+		$template->registerHelper('localDate', 'App\TemplateHelpers::localeDate');
+		return $template;
+	}
+
+	public function flashSuccess($message)
+	{
+		$this->flashMessage($message, 'success');
+	}
+
+	public function flashError($message)
+	{
+		$this->flashMessage($message, 'danger');
+	}
+
+	public function handleCancel($reservation)
+	{
+		$reservation = $this->orm->reservations->getById($reservation);
+		if ($this->userEntity !== $reservation->user) {
+			$this->error(); // @todo throw denied not 404
+		}
+
+		$this->orm->reservations->remove($reservation);
+		$this->orm->flush();
+		$this->flashSuccess('Rezervace byla zrušena.');
+		$this->redirect('this');
+	}
+
 }

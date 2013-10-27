@@ -1,0 +1,24 @@
+<div class="modal fade" id="{$control->uniqueId}">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">{$title}</h4>
+			</div>
+			{form $form}
+				<div class="modal-body">
+					<div n:foreach="$form['body']->getComponents() as $control" class="form-group">
+						{label $control /}
+						{input $control, class => 'form-control'}
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					{foreach $form['buttons']->getComponents() as $control}
+						{input $control}
+					{/foreach}
+				</div>
+			{/form}
+		</div>
+	</div>
+</div>

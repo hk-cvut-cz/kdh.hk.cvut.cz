@@ -6,10 +6,12 @@
 #
 parameters:
 	appNamespace: App
-	repositories:
-		games: App\GamesRepository
+	locale: [cs_CZ, cs_CZ.UTF-8, cs_CZ.ISO8859-2]
 	adminerEditor:
 		login: [mikulas.dite]
+	repositories:
+		games: App\GamesRepository
+		reservations: App\ReservationsRepository
 
 php:
 	date.timezone: Europe/Prague
@@ -35,7 +37,22 @@ services:
 	passwordHashCalculator: App\Rups\PasswordHashCalculator
 	authenticator: App\Rups\Authenticator
 
-	orm: App\RepositoryContainer(@serviceContainerFactory, %repositories%, @container)
+	orm:
+		class: App\RepositoryContainer(@orm.serviceContainer, %repositories%)
+	orm.dibiConnection:
+		class: DibiConnection(%database%)
+	orm.serviceContainerFactory:
+		class: Orm\ServiceContainerFactory(NULL)
+	orm.serviceContainer:
+		class: Orm\ServiceContainer
+		factory: @orm.serviceContainerFactory::getContainer()
+		setup:
+			- removeService(dibi)
+			- addService(dibi, @orm.dibiConnection)
+			- addService(gameMeta, @gameMeta)
+
 	serviceContainerFactory: Clevis\Skeleton\Orm\ServiceContainerFactory(@dibiConnection, @performanceHelperCache)
 	entityRelationsRegistry: Clevis\Skeleton\Orm\EntityRelationsRegistry
 	performanceHelperCache:	Nette\Caching\Cache(@cacheStorage, Orm.PerformanceHelper)
+
+	gameMeta: App\GameMeta

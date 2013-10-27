@@ -3,4 +3,63 @@
 .cover {
 	max-width: 200px;
 	max-height: 200px;
+
+	&.small {
+		max-width: 32px;
+		max-height: 32px;
+		position: absolute;
+		margin-top: -6px;
+		margin-left: 12px;
+	}
+}
+
+tr {
+	.hover-opacity {
+		opacity: .4;
+	}
+	&:hover .hover-opacity {
+		opacity: 1;
+	}
+}
+
+.navbar-default .navbar-nav>li>a.navbar-btn {
+	padding: 6px 8px 5px 8px;
+	margin-right: 15px;
+}
+
+.navbar-pushed {
+	margin-top: 32px;
+}
+
+.column-cover {
+	width: 48px;
+}
+
+.datepicker {
+	table thead tr th:hover,
+	table tbody tr td.old:hover {
+		cursor: default;
+		background-color: inherit !important;
+	}
+	table tr td.disabled,
+	table tr td.disabled:hover {
+		color: #b94a48;
+	}
+	table tr td.highlit,
+	table tr td.highlit:hover {
+		font-weight: bold;
+		color: #468847;
+	}
+}
+
+.modal {
+	&.narrow .modal-content {
+		width: 400px;
+		.modal-body {
+			text-align: center;
+		}
+		.datepicker table {
+			margin: auto;
+		}
+	}
 }

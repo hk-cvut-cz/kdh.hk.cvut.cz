@@ -1,0 +1,12 @@
+<script>
+	$(function() {
+		var $submit = $('form [type="submit"]');
+		$submit.prop('disabled', true);
+		$('.day:not(.old):not(.disabled)').click(function() {
+			$submit.prop('disabled', false);
+			$('.day.active').removeClass('active');
+			$(this).addClass('active');
+			$('#{!$id}').val($(this).data('date'));
+		});
+	});
+</script>

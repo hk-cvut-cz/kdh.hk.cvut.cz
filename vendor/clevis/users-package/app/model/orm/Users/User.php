@@ -3,13 +3,17 @@
 namespace Clevis\Users;
 
 use Clevis\Skeleton\Entity;
+use Orm\EntityNotPersistedException;
 
 
 /**
- * Entity representing one user
- *
- * @property string $username
- * @property string $password
+ * @property int $rupsId
+ * @property string $login
+ * @property string $name
+ * @property string $surname
+ * @property string $email
+ * @property Orm\OneToMany $reservations {1:m App\ReservationsRepository $user}
+ * @property Orm\OneToMany $votes {1:m App\VotesRepository $user}
  */
 class User extends Entity
 {
