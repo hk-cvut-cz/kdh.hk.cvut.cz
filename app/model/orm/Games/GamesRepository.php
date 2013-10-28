@@ -7,6 +7,7 @@ use Clevis\Skeleton\Repository;
 
 /**
  * @method Orm\IEntityCollection findAll()
+ * @method Orm\IEntityCollection findByStatus()
  * @method Orm\IEntityCollection findProposedByVotes()
  */
 class GamesRepository extends Repository
@@ -19,7 +20,17 @@ class GamesRepository extends Repository
 
 	public function findAvailable()
 	{
-		return $this->findAll()->where('status = ?', Game::AVAILABLE);
+		return $this->findByStatus(Game::AVAILABLE);
+	}
+
+	public function findPurchased()
+	{
+		return $this->findByStatus(Game::PURCHASED);
+	}
+
+	public function findBroken()
+	{
+		return $this->findByStatus(Game::BROKEN);
 	}
 
 }

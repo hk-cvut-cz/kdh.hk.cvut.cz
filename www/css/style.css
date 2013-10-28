@@ -8,6 +8,7 @@ tr:hover .hover-opacity{opacity:1}
 .game-meta .thumbnail{margin-bottom:20px}
 .game-files{margin-top:20px}.game-files a{padding:5px 15px}
 .game .reservations{margin:20px 0 30px 0}
+table+h3{margin-top:50px}
 .navbar-default .navbar-nav>li>a.navbar-btn{padding:6px 8px 5px 8px;margin-right:15px}
 .navbar-default .navbar-nav>li>a.btn-primary{color:#fff}.navbar-default .navbar-nav>li>a.btn-primary:hover{color:#285e8e}
 .navbar-pushed{margin-top:32px}

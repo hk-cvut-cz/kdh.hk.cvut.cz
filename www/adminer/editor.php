@@ -30,12 +30,26 @@ $_GET['username'] = ''; // triggers autologin
 
 function adminer_object() {
 
-	class AdminerSoftware extends Adminer {
+	include_once __DIR__ . "/plugins/plugin.php";
+
+    // autoloader
+    foreach (glob("plugins/*.php") as $filename) {
+		include_once "./$filename";
+    }
+
+    $plugins = array(
+		// specify enabled plugins here
+		new AdminerTranslation,
+		new AdminerVersionNoverify,
+    );
+
+	class AdminerSoftware extends AdminerPlugin {
 
 		private $context;
 		private $user;
 
-		function __construct($context, $user) {
+		function __construct($plugins, $context, $user) {
+			parent::__construct($plugins);
 			$this->context = $context;
 			$this->user = $user;
 		}
@@ -95,7 +109,7 @@ function adminer_object() {
 
 	global $container;
 	global $user;
-	return new AdminerSoftware($container, $user);
+	return new AdminerSoftware($plugins, $container, $user);
 }
 
 include "./editor-3.7.1-mysql.php";

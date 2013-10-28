@@ -11,7 +11,9 @@ class HomepagePresenter extends BasePresenter
 
 	public function renderDefault()
 	{
-		$this->template->games = $this->orm->games->findAvailable()->orderBy('name');
+		$this->template->available = $this->orm->games->findAvailable()->orderBy('name');
+		$this->template->purchased = $this->orm->games->findPurchased()->orderBy('name');
+		$this->template->broken = $this->orm->games->findBroken()->orderBy('name');
 
 		$this->template->reservations = [];
 		if ($this->userEntity)

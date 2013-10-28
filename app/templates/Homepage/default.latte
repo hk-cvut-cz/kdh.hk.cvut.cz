@@ -21,44 +21,47 @@
 	{include '../_reservations.latte', reservations => $reservations}
 {/if}
 
-<table class="table table-hover">
-	<thead>
-		<tr>
-			<th colspan="2">Hra</th>
-			<th>Hodnocení</th>
-			<th>Stav</th>
-			<th>Rezervací</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr n:foreach="$games as $game">
-			<td class="column-cover">
-				<a n:href="Game:, id => $game->id">
-					<img src="{$game->meta->cover}" class="cover small">
-				</a>
-			</td>
-			<td>
-				<a n:href="Game:, id => $game->id">
-					{$game->meta->name}
-				</a>
-			</td>
-			<td>
-				{$game->meta->rating|number:1}
-			</td>
-			<td>
-				{if $game->available}
-					k vypůjčení
-				{elseif $game->proposed}
-					hlasování
-				{elseif $game->purchased}
-					koupeno, na cestě
-				{elseif $game->broken}
-					hra je rozbitá
-				{/if}
-			</td>
-			<td>
-				{$game->reservations->count()}
-			</td>
-		</tr>
-	</tbody>
-</table>
+{define #table}
+	<table class="table table-hover" n:if="$res->count()">
+		<thead>
+			<tr>
+				<th colspan="2">Hra</th>
+				<th>Hodnocení</th>
+				<th n:ifset="$showReservations">Rezervací</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr n:foreach="$res as $game">
+				<td class="column-cover">
+					<a n:href="Game:, id => $game->id">
+						<img src="{$game->meta->cover}" class="cover small">
+					</a>
+				</td>
+				<td>
+					<a n:href="Game:, id => $game->id">
+						{$game->meta->name}
+					</a>
+				</td>
+				<td>
+					{$game->meta->rating|number:1}
+				</td>
+				<td n:ifset="$showReservations">
+					{$game->reservations->count()}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+{/define}
+
+{if $available->count()}
+	<h3>Hry k vypůjčení</h3>
+	{include #table, res => $available, showReservations => TRUE}
+{/if}
+{if $purchased->count()}
+	<h3>Hry které určitě pořídíme</h3>
+	{include #table, res => $purchased}
+{/if}
+{if $broken->count()}
+	<h3>Rozbité hry, které se dočasně nedají půjčit</h3>
+	{include #table, res => $broken}
+{/if}
