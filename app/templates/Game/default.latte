@@ -4,7 +4,7 @@
 	<div class="col-md-9">
 		<h1 n:block="title">{$game->meta->name}</h1>
 
-		<p>
+		<p n:if="$game->available">
 			{if $user->loggedIn}
 				{control reservation:button, 'Rezervovat'}
 			{else}
@@ -30,13 +30,16 @@
 		<ul class="list-group">
 			{var $r = $game->meta->rating}
 			<li class="list-group-item">
-				Hodnocení: <span n:class="$r > 8 ? text-success : ($r < 6 ? text-danger)">{$r|number:1}</span>
+				{$game->meta->categories|implode:', '}
+			</li>
+			<li class="list-group-item">
+				hodnocení: <span n:class="$r > 8 ? text-success : ($r < 6 ? text-danger)">{$r|number:1}</span>
 			</li>
 			<li class="list-group-item">
 				{$game->meta->players} hráčů, {$game->meta->playtime}
 			</li>
 			<li class="list-group-item">
-				Vydáno: {$game->meta->published}
+				{$game->meta->publisher}, {$game->meta->published}
 			</li>
 		</ul>
 	</div>

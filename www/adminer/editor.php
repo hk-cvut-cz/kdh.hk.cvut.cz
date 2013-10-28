@@ -71,6 +71,10 @@ function adminer_object() {
 		}
 
 		function login() {
+			if (count($_GET) <= 1) // we set 'username'
+			{
+				header('Location: /');
+			}
 			return $this->isLoggedIn() && $this->isInRole();
 		}
 
@@ -100,10 +104,7 @@ function adminer_object() {
 		}
 
 		private function isInRole() {
-			return in_array(
-				$this->user->login,
-				$this->context->parameters['adminerEditor']['login']
-			);
+			return $this->context->user->isInRole($this->context->parameters['adminerEditor']['role']);
 		}
 
 	}

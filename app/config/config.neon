@@ -8,7 +8,7 @@ parameters:
 	appNamespace: App
 	locale: [cs_CZ, cs_CZ.UTF-8, cs_CZ.ISO8859-2]
 	adminerEditor:
-		login: [mikulas.dite]
+		role: editor
 	repositories:
 		games: App\GamesRepository
 		reservations: App\ReservationsRepository

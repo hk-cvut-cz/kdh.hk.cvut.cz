@@ -59,7 +59,7 @@ class Authenticator extends Object implements Security\IAuthenticator
 			$user = $this->users->insertFromRups($rupsUser);
 		}
 
-		return new Security\Identity($user->id, NULL, NULL);
+		return new Security\Identity($user->id, $user->roles, NULL);
 	}
 
 }

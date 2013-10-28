@@ -19,6 +19,9 @@ class Router extends RouteList
 		parent::__construct();
 
 		$this[] = new Route('index.php', 'Homepage:default', Route::ONE_WAY);
+		$this[] = new Route('hra/<id>', 'Game:default');
+		$this[] = new Route('hlasovani', 'Vote:default');
+		$this[] = new Route('o-klubu', 'Homepage:about');
 		$this[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
 	}
 

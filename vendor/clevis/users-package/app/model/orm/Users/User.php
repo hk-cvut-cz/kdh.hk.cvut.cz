@@ -14,8 +14,18 @@ use Orm\EntityNotPersistedException;
  * @property string $email
  * @property Orm\OneToMany $reservations {1:m App\ReservationsRepository $user}
  * @property Orm\OneToMany $votes {1:m App\VotesRepository $user}
+ * @property Orm\MacroSet $roles {enum self::getRoles()}
  */
 class User extends Entity
 {
+
+	const ROLE_EDITOR = 'editor';
+
+	public static function getRoles()
+	{
+		return [
+			self::ROLE_EDITOR,
+		];
+	}
 
 }

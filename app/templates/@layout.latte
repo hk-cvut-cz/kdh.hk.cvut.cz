@@ -38,6 +38,7 @@
 							<li class="{ifCurrent Homepage:}active{/ifCurrent}"><a n:href="Homepage:">Přehled her</a></li>
 							<li class="{ifCurrent Vote:}active{/ifCurrent}"><a n:href="Vote:">Hlasování</a></li>
 							<li class="{ifCurrent Homepage:about}active{/ifCurrent}"><a n:href="Homepage:about">O klubu</a></li>
+							<li n:if="$user->isInRole($userEntity::ROLE_EDITOR)"><a href="/adminer/editor.php?view">Databáze</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							{if $user->loggedIn}
