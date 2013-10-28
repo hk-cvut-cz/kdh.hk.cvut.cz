@@ -24,6 +24,7 @@
  */
 
 $container = require __DIR__ . '/../../app/bootstrap.php';
+$user = $container->orm->users->getById($container->user->id);
 
 $_GET['username'] = ''; // triggers autologin
 
@@ -32,9 +33,11 @@ function adminer_object() {
 	class AdminerSoftware extends Adminer {
 
 		private $context;
+		private $user;
 
-		function __construct($context) {
+		function __construct($context, $user) {
 			$this->context = $context;
+			$this->user = $user;
 		}
 
 		function name() {
@@ -57,17 +60,17 @@ function adminer_object() {
 			return $this->isLoggedIn() && $this->isInRole();
 		}
 
-		// function tableName($tableStatus) {
-		// 	// only tables with comment will be displayed
-		// 	return h($tableStatus["Comment"]);
-		// }
+		function tableName($tableStatus) {
+			// only tables with comment will be displayed
+			return h($tableStatus["Comment"]);
+		}
 
-		// function fieldName($field, $order = 0) {
-		// 	// only columns with comments will be displayed
-		// 	// table must have at least one column with comment
-		// 	// to select properly
-		// 	return h($field["comment"]);
-		// }
+		function fieldName($field, $order = 0) {
+			// only columns with comments will be displayed
+			// table must have at least one column with comment
+			// to select properly
+			return h($field["comment"]);
+		}
 
 		function loginForm() {
 			if (!$this->isLoggedIn()) {
@@ -83,7 +86,7 @@ function adminer_object() {
 
 		private function isInRole() {
 			return in_array(
-				$this->context->user->identity->Login,
+				$this->user->login,
 				$this->context->parameters['adminerEditor']['login']
 			);
 		}
@@ -91,7 +94,8 @@ function adminer_object() {
 	}
 
 	global $container;
-	return new AdminerSoftware($container);
+	global $user;
+	return new AdminerSoftware($container, $user);
 }
 
 include "./editor-3.7.1-mysql.php";

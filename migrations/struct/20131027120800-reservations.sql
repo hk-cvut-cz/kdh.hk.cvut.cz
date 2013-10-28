@@ -7,3 +7,5 @@ CREATE TABLE `reservations` (
   FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) COMMENT='Rezervace';
+
+ALTER TABLE `reservations` ADD UNIQUE `game_id_date` (`game_id`, `date`);
