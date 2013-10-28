@@ -38,7 +38,11 @@ class SignPresenter extends BasePresenter
 		try
 		{
 			$this->user->login($values->username, $values->password);
-			if ($this->backlink)
+			if ($this->backlink === 'editor')
+			{
+				$this->redirectUrl('/adminer/editor.php');
+			}
+			elseif ($this->backlink)
 			{
 				$this->restoreRequest($this->backlink);
 			}
@@ -53,7 +57,7 @@ class SignPresenter extends BasePresenter
 	public function actionOut()
 	{
 		$this->user->logout(TRUE);
-		$this->flashSuccess('„Our whole life is solving puzzles.“ — Erno Rubik', 'Odhlášeno!');
+		$this->flashSuccess($this->orm->quotes->getRandom(), 'Odhlášeno!');
 		$this->redirect('in');
 	}
 

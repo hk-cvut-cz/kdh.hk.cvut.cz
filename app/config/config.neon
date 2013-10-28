@@ -13,6 +13,7 @@ parameters:
 		games: App\GamesRepository
 		reservations: App\ReservationsRepository
 		votes: App\VotesRepository
+		quotes: App\QuotesRepository
 
 php:
 	date.timezone: Europe/Prague

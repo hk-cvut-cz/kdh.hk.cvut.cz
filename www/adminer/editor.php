@@ -88,6 +88,7 @@ function adminer_object() {
 
 		function loginForm() {
 			if (!$this->isLoggedIn()) {
+				header('Location: /sign/in?backlink=editor');
 				echo "<p>Přihlaste se prosím ke svému účtu přes tradiční formulář.</p>";
 			} else if (!$this->isInRole()) {
 				echo "<p>Váš účet nemá oprávnění k editoru.</p>";
