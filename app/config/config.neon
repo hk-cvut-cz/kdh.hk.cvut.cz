@@ -6,7 +6,7 @@
 #
 parameters:
 	appNamespace: App
-	locale: [cs_CZ, cs_CZ.UTF-8, cs_CZ.ISO8859-2]
+	locale: [cs_CZ.UTF-8, cs_CZ, cs_CZ.ISO8859-2]
 	adminerEditor:
 		role: editor
 	repositories:

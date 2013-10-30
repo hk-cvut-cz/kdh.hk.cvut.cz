@@ -2,8 +2,9 @@
 
 namespace Clevis\Skeleton;
 
-use Orm;
 use Clevis\Skeleton\Orm\EntityRelationsRegistry;
+use Orm;
+use Orm\AnnotationMetaData;
 
 
 /**
@@ -18,7 +19,8 @@ abstract class Entity extends Orm\Entity
 
 	public static function createMetaData($entityClass)
 	{
-		$metaData = parent::createMetaData($entityClass);
+		// $metaData = parent::createMetaData($entityClass);
+		$metaData = AnnotationMetaData::getMetaData($entityClass);
 
 		return self::$relationsRegistry->completeMetaData(get_called_class(), $metaData);
 	}
