@@ -11,9 +11,10 @@ parameters:
 		role: editor
 	repositories:
 		games: App\GamesRepository
+		pages: App\PagesRepository
+		quotes: App\QuotesRepository
 		reservations: App\ReservationsRepository
 		votes: App\VotesRepository
-		quotes: App\QuotesRepository
 
 php:
 	date.timezone: Europe/Prague
@@ -26,6 +27,9 @@ nette:
 		templateFactory: Clevis\Skeleton\TemplateFactory(Nette.templateCacheStorage)
 	session:
 		expiration: 14 days
+	latte:
+		macros:
+			- App\CustomMacros::install
 
 services:
 	router: App\Router

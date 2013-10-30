@@ -56,6 +56,7 @@ abstract class BasePresenter extends Core\BasePresenter
 		$template->registerHelper('relativeDate', 'App\TemplateHelpers::dateAgoInWords');
 		$template->registerHelper('relativeTime', 'App\TemplateHelpers::timeAgoInWords');
 		$template->registerHelper('localDate', 'App\TemplateHelpers::localeDate');
+
 		return $template;
 	}
 

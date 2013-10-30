@@ -27,7 +27,8 @@
 		"clevis/skeleton-core": "*",
 		"clevis/migration": "*",
 		"clevis/skeleton-package-installer": "*",
-		"clevis/users-package": "*"
+		"clevis/users-package": "*",
+		"dflydev/markdown": "~1.0.3"
 	},
 	"require-dev": {
 		"phpunit/phpunit": ">=3.7.20",
