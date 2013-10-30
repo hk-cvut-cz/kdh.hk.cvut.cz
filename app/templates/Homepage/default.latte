@@ -1,15 +1,7 @@
 {#content}
 
 {if $user->loggedIn && $userEntity->login === 'mikulas.dite'}
-	<h1>TODO:</h1>
-	<ul>
-		<li>upravit about page <span class="badge">required</span></li>
-		<li>page "moje rezervace" kde budou i past rezervace</li>
-		<li>stats spage, kdo si pujcuje hry nejvic (?) a jake hry jsou nejoblibenejsi</li>
-		<li>na vote page zobrazit, kolik % ze vsech votes hra ma</li>
-		<li>na vote page zobrazit bar nebo pie chart</li>
-		<li>chci hrat button</li>
-	</ul>
+	{include todo.latte}
 {/if}
 
 {if $user->loggedIn && $reservations->count()}

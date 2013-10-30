@@ -7,6 +7,15 @@
 		<p n:if="$game->available">
 			{if $user->loggedIn}
 				{control reservation:button, 'Rezervovat'}
+				{if $game->playersSearching->has($userEntity)}
+					<a data-toggle="modal" n:href="stopLookingForPlayers!" class="btn btn-secondary btn-lg">Už nehledám spoluhráče</a>
+				{else}
+					{var $count = $game->playersSearching->count()}
+					<a data-toggle="modal" n:href="lookForPlayers!" class="btn btn-secondary btn-lg">
+						Hledám spoluhráče
+						{if $count > 0}({$count}&times;){/if}
+					</a>
+				{/if}
 			{else}
 				<a n:href="Sign:in, backlink => $backlink" class="btn btn-default btn-lg">Rezervovat</a>
 			{/if}

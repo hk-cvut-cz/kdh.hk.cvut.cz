@@ -126,4 +126,40 @@ class GamePresenter extends BasePresenter
 		return $picker;
 	}
 
+	public function handleLookForPlayers()
+	{
+		// @TOOD add email to queue for all players searching (only if count>=2)
+		$this->game->playersSearching->add($this->userEntity);
+		$this->orm->flush();
+		$count = $this->game->playersSearching->count();
+		if ($count >= 2)
+		{
+			$other = $count - 1;
+			$plural = TemplateHelpers::plural($other, 'další hráč', 'další hráči', 'dalších hráčů');
+			$word = $count == 2 ? 'oba' : 'všichni';
+			$this->flashSuccess("Tuhle hru chce hrát $other $plural, $word teď dostanete email a můžete se domluvit (nebo počkat na další hráče, pokud je vás málo).", 'Super!'); // @todo pluralize
+		}
+		else
+		{
+			$this->flashSuccess('Zatím se ke hraní této hry nikdo jiný nepřihlásil. Hned jak se někdo další přidá, přijde ti email.', 'Patience young padawan.');
+		}
+		$this->redirect('this');
+	}
+
+	public function handleStopLookingForPlayers()
+	{
+		$this->game->playersSearching->remove($this->userEntity);
+		$this->orm->flush();
+		$count = $this->game->playersSearching->count();
+		if ($count == 0)
+		{
+			$this->flashSuccess('Zatím se ke hraní nikdo nepřihlásil, ale třeba se ještě někdo najde.', 'Nerozmyslíš si to?');
+		}
+		else
+		{
+			$this->flashSuccess('Ostatním uživatelům nebude odeslán žádný email o tom, že už spoluhráče nehledáš.', 'Hotovo.');
+		}
+		$this->redirect('this');
+	}
+
 }

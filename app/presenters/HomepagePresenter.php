@@ -21,6 +21,7 @@ class HomepagePresenter extends BasePresenter
 			$this->template->reservations = $this->userEntity->reservations
 				->get()->where('date > Date(Now())')->orderBy('date', 'ASC');
 		}
+		foreach ($this->userEntity->gamesSearching as $t) {}
 	}
 
 }

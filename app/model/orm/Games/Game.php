@@ -13,6 +13,7 @@ use Nette\DateTime;
  * @property string $status {enum self::getStatuses()}
  * @property Orm\OneToMany $reservations {1:m App\ReservationsRepository $game}
  * @property Orm\OneToMany $votes {1:m App\VotesRepository $game}
+ * @property Orm\ManyToMany $playersSearching {m:m Clevis\Users\UsersRepository $gamesSearching}
  */
 class Game extends Entity
 {

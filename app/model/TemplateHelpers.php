@@ -94,7 +94,7 @@ class TemplateHelpers
 	 * @param  int
 	 * @return mixed
 	 */
-	private static function plural($n)
+	public static function plural($n)
 	{
 		$args = func_get_args();
 		return $args[($n == 1) ? 1 : (($n >= 2 && $n <= 4) ? 2 : 3)];

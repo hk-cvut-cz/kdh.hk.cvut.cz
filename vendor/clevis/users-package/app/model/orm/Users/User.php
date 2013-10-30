@@ -15,6 +15,7 @@ use Orm\EntityNotPersistedException;
  * @property Orm\OneToMany $reservations {1:m App\ReservationsRepository $user}
  * @property Orm\OneToMany $votes {1:m App\VotesRepository $user}
  * @property string $role {enum self::getRoles()}
+ * @property Orm\ManyToMany $gamesSearching {m:m App\GamesRepository $playersSearching map}
  */
 class User extends Entity
 {
