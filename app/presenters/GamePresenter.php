@@ -141,7 +141,7 @@ class GamePresenter extends BasePresenter
 		}
 		else
 		{
-			$this->flashSuccess('Zatím se ke hraní této hry nikdo jiný nepřihlásil. Hned jak se někdo další přidá, přijde ti email.', 'Patience young padawan.');
+			$this->flashSuccess('Zatím se ke hraní této hry nikdo jiný nepřihlásil. Hned jak se někdo další přidá, přijde ti email.', 'A teď stačí čekat.');
 		}
 		$this->redirect('this');
 	}
