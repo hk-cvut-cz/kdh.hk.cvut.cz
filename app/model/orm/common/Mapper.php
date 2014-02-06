@@ -8,7 +8,7 @@ use Clevis\Skeleton\Orm\DibiMapper;
 /**
  * Base class for all mappers
  */
-abstract class Mapper extends DibiMapper
+class Mapper extends DibiMapper
 {
 
 }
