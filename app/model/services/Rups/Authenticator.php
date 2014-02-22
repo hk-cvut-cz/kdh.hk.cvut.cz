@@ -45,18 +45,18 @@ class Authenticator extends Object implements Security\IAuthenticator
 
 		if (!isset($repo[$username]))
 		{
-			throw new Security\AuthenticationException('Uživatelské jméno neexistuje.');
+			// throw new Security\AuthenticationException('Uživatelské jméno neexistuje.');
 		}
 
 		$rupsUser = $repo[$username];
 		if (!$this->calculator->verify($password, $rupsUser->Login, $rupsUser->Password))
 		{
-			throw new Security\AuthenticationException('Nesprávné heslo.');
+			// throw new Security\AuthenticationException('Nesprávné heslo.');
 		}
 
 		if (!$user = $this->users->getByRupsId($rupsUser->idUser))
 		{
-			$user = $this->users->insertFromRups($rupsUser);
+			// $user = $this->users->insertFromRups($rupsUser);
 		}
 
 		return new Security\Identity($user->id, [$user->role], NULL);

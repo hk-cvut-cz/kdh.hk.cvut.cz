@@ -122,7 +122,7 @@ class GamePresenter extends BasePresenter
 
 	public function handleLookForPlayers()
 	{
-		// @TOOD add email to queue for all players searching (only if count>=2)
+		// @TODO add email to queue for all players searching (only if count>=2)
 		$this->game->playersSearching->add($this->userEntity);
 		$this->orm->flush();
 		$count = $this->game->playersSearching->count();
@@ -131,7 +131,9 @@ class GamePresenter extends BasePresenter
 			$other = $count - 1;
 			$plural = TemplateHelpers::plural($other, 'další hráč', 'další hráči', 'dalších hráčů');
 			$word = $count == 2 ? 'oba' : 'všichni';
-			$this->flashSuccess("Tuhle hru chce hrát $other $plural, $word teď dostanete email a můžete se domluvit (nebo počkat na další hráče, pokud je vás málo).", 'Super!'); // @todo pluralize
+			$this->flashSuccess("Tuhle hru chce hrát $other $plural, $word teď dostanete email a můžete se domluvit (nebo počkat na další hráče, pokud je vás na hru potřeba víc).", 'Super!'); // @TODO pluralize
+
+			$this->context->getService('emails')->notifyPlayersSearching($this->game, $this->userEntity);
 		}
 		else
 		{

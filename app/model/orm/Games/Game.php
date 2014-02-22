@@ -119,4 +119,9 @@ class Game extends Entity
 		return $md->transformMarkdown($this->getValue('text'));
 	}
 
+	public function getMinPlayers()
+	{
+		return (int) $this->players;
+	}
+
 }

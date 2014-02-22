@@ -12,6 +12,7 @@ use Orm\EntityNotPersistedException;
  * @property string $name
  * @property string $surname
  * @property string $email
+ *
  * @property Orm\OneToMany $reservations {1:m App\ReservationsRepository $user}
  * @property Orm\OneToMany $votes {1:m App\VotesRepository $user}
  * @property string|NULL $role {enum self::getRoles()}
@@ -27,6 +28,11 @@ class User extends Entity
 		return [
 			self::ROLE_EDITOR => self::ROLE_EDITOR,
 		];
+	}
+
+	public function getFullName()
+	{
+		return "$this->name $this->surname";
 	}
 
 }

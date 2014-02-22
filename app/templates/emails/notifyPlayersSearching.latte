@@ -1,0 +1,30 @@
+{layout '@layout.latte'}
+{var $mail->subject = "Nový hráč: {$game->name}" }
+
+{block #content}
+<p>Ahoj,</p>
+<p>{$newPlayer->name} se také přihlásil k hraní <em>{$game->name}</em>.</p>
+<p>
+	{var $count = $players->count()}
+	{if $count == 2}
+		Zatím jste dva:
+	{elseif $count < 5}
+		Už jste {if $count == 3}tři{else}čtyři{/if}:
+    {else}
+    	Už je vás celkem {$count}:
+    {/if}
+    <ul n:block="list">
+		<li n:foreach="$players as $player">{$player->fullName}</li>
+	</ul>
+
+</p>
+<p>
+	{if $count > $game->minPlayers}
+		Vypadá to, že už je vás ke hře dostatek ({$game->players}), můžete si rovnou domluvit nějaký termín.
+	{else}
+		Zatím je vás málo, ke hře je potřeba {$game->players} hráčů. Zkuste někde najít další hráče.
+	{/if}
+</p>
+<p>
+	<a href="http://kdh.hk.cvut.cz/hra/{$game->id}" class="btn bnt-default">{$game->name} na KDH</a>
+</p>

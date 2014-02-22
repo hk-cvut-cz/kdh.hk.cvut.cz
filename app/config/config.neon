@@ -30,9 +30,13 @@ nette:
 	latte:
 		macros:
 			- App\CustomMacros::install
+	debugger:
+		bar: [JanDrabek\MailPanel\MailPanel]
 
 services:
 	router: App\Router
+
+	emails: App\Emails
 
 	nette.presenterFactory: Clevis\Skeleton\PresenterFactory(%appDir%, @container, %appNamespace%)
 	templateFactory: Clevis\Skeleton\TemplateFactory(@nette.templateCacheStorage, [@container, createServiceNette__template])
