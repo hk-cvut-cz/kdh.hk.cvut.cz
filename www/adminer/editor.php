@@ -114,4 +114,4 @@ function adminer_object() {
 	return new AdminerSoftware($plugins, $container, $user);
 }
 
-include "./editor-3.7.1-mysql.php";
+include "./editor-4.0.3-mysql.php";

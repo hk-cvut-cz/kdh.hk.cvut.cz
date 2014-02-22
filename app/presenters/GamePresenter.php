@@ -62,19 +62,13 @@ class GamePresenter extends BasePresenter
 		}
 	}
 
-	public function createComponentReservation()
-	{
-		$modal = new Components\ModalDatePicker;
-		$modal->setForm($this['reservationForm']);
-		return $modal;
-	}
-
 	public function createComponentReservationForm($name)
 	{
 		$form = $this->createForm($name);
 
 		$body = $form->addContainer('body');
-		$body->addHidden('date');
+		$body->addHidden('date')
+			->controlPrototype->id($body['date']->htmlId); // forced render
 
 		$buttons = $form->addContainer('buttons');
 		$buttons->addSubmit('reserve', 'Rezervovat')
