@@ -14,16 +14,16 @@
 			<tr n:class="$voted ? success">
 				<td class="column-cover">
 					<a n:href="Game:, id => $game->id">
-						<img src="{$game->meta->cover}" class="cover small">
+						<img src="{$game->cover}" class="cover small">
 					</a>
 				</td>
 				<td>
 					<a n:href="Game:, id => $game->id">
-						{$game->meta->name}
+						{$game->name}
 					</a>
 				</td>
 				<td>
-					{$game->meta->rating|number:1}
+					{$game->rating|number:1}
 				</td>
 				<td>
 					{$game->votes->count()}&thinsp;&times;

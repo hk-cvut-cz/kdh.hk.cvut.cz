@@ -13,12 +13,12 @@
 		<tr n:foreach="$reservations as $reservation">
 			<td n:if="!$min" class="column-cover">
 				<a n:href="Game:, id => $reservation->game->id">
-					<img src="{$reservation->game->meta->cover}" class="cover small">
+					<img src="{$reservation->game->cover}" class="cover small">
 				</a>
 			</td>
 			<td n:if="!$min">
 				<a n:href="Game:, id => $reservation->game->id">
-					{$reservation->game->meta->name}
+					{$reservation->game->name}
 				</a>
 			</td>
 			<td>
