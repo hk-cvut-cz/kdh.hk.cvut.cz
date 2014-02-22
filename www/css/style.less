@@ -75,11 +75,13 @@ table + h3 {
 	table tr td.disabled,
 	table tr td.disabled:hover {
 		color: #b94a48;
+		background-color: lighten(#b94a48, 40%);
 	}
 	table tr td.highlit,
 	table tr td.highlit:hover {
 		font-weight: bold;
 		color: #468847;
+		background-color: lighten(#468847, 40%);
 	}
 }
 
@@ -93,4 +95,9 @@ table + h3 {
 			margin: auto;
 		}
 	}
+}
+
+.reservation-box {
+	float: left;
+	padding-bottom: 4ex;
 }

@@ -1,6 +1,8 @@
 {**
  * @param Orm\IEntityCollection $reservations
+ * @param bool $min
  *}
+{default $min => FALSE}
 <table class="table table-hover reservations">
 	<thead>
 		<tr>
@@ -9,12 +11,12 @@
 	</thead>
 	<tbody>
 		<tr n:foreach="$reservations as $reservation">
-			<td class="column-cover">
+			<td n:if="!$min" class="column-cover">
 				<a n:href="Game:, id => $reservation->game->id">
 					<img src="{$reservation->game->meta->cover}" class="cover small">
 				</a>
 			</td>
-			<td>
+			<td n:if="!$min">
 				<a n:href="Game:, id => $reservation->game->id">
 					{$reservation->game->meta->name}
 				</a>
@@ -29,7 +31,8 @@
 				<a n:href="cancel!, reservation => $reservation->id">
 					<span class="visible-xs">zrušit</span>
 					<span class="hidden-xs hover-opacity">
-						<span class="glyphicon glyphicon-trash"></span> zrušit rezervaci
+						<span class="glyphicon glyphicon-trash"></span>
+						{if !$min}zrušit rezervaci{/if}
 					</span>
 				</a>
 			</td>
