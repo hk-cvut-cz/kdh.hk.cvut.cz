@@ -45,6 +45,6 @@
 	<p class="col-md-12">
 		{var $votes = $control->orm->votes->findAll()->count()}
 		{var $users = $control->orm->users->findAll()->count()}
-		Hlasovalo: {$votes} z {$users} ({$votes / $users * 100|number:2}&thinsp;%)
+		Hlasovalo: {$votes} z {$users} ({$votes / $users * 100|number:1}&thinsp;%) uživatelů
 	</p>
 </div>
