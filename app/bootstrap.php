@@ -11,8 +11,8 @@ require __DIR__ . '/config/Configurator.php';
 $configurator = new App\Configurator(__DIR__ . '/../temp');
 
 // Enable Nette Debugger for error visualisation & logging
-//$configurator->setDebugMode($configurator::AUTO);
-$configurator->enableDebugger(__DIR__ . '/../log', 'error@clevis.cz');
+// $configurator->setDebugMode($configurator::AUTO);
+$configurator->enableDebugger(__DIR__ . '/../log', 'mikulas.dite@gmail.com');
 Debugger::$showLocation = TRUE;
 
 // Enable RobotLoader - this will load all classes automatically
