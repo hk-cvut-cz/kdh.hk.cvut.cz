@@ -5,12 +5,23 @@ namespace App;
 use Clevis\Skeleton\Entity;
 use Clevis\Users\User;
 use Nette\DateTime;
+use dflydev\markdown\MarkdownExtraParser as Markdown;
 
 
 /**
  * @property string $name
  * @property string $url
  * @property string $status {enum self::getStatuses()}
+ *
+ * @property string $tags
+ * @property string $players (ex 2-5)
+ * @property string $time (ex 100 min)
+ * @property int $published (ex 2012)
+ * @property string $publisher
+ * @property double $rating
+ * @property string $cover url
+ * @property string $text markdown
+ * 
  * @property Orm\OneToMany $reservations {1:m App\ReservationsRepository $game}
  * @property Orm\OneToMany $votes {1:m App\VotesRepository $game}
  * @property Orm\ManyToMany $playersSearching {m:m Clevis\Users\UsersRepository $gamesSearching}
@@ -100,6 +111,12 @@ class Game extends Entity
 	public function getUpcomingReservations()
 	{
 		return $this->reservations->get()->where('date >= Date(Now())');
+	}
+
+	public function getTextAsHtml()
+	{
+		$md = new Markdown;
+		return $md->transformMarkdown($this->getValue('text'));
 	}
 
 }

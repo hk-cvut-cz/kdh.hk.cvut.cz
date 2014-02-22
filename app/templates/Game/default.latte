@@ -33,30 +33,28 @@
 			{/if}
 		</div>
 
-		<h1 n:block="title">{$game->meta->name}</h1>
-		<p n:foreach="$game->meta->description as $paragraph">
-			{$paragraph}
-		</p>
+		<h1 n:block="title">{$game->name}</h1>
+		{!$game->textAsHtml}
 
 		{* <p>
-			Data jsou převzata z webu <a href="{$game->meta->url}" target="blank">zatrolene-hry.cz</a>.
+			Data jsou převzata z webu <a href="{$game->url}" target="blank">zatrolene-hry.cz</a>.
 		</p> *}
 	</div>
 	<div class="col-md-3 game-meta pull-right hidden-sm hidden-xs">
-		<img src="{$game->meta->cover}" class="thumbnail">
+		<img src="{$game->cover}" class="thumbnail">
 		<ul class="list-group">
-			{var $r = $game->meta->rating}
+			{var $r = $game->rating}
 			<li class="list-group-item">
-				{$game->meta->categories|implode:', '}
+				{$game->tags}
 			</li>
 			<li class="list-group-item">
 				hodnocení: <span n:class="$r > 8 ? text-success : ($r < 6 ? text-danger)">{$r|number:1}</span>
 			</li>
 			<li class="list-group-item">
-				{$game->meta->players} hráčů, {$game->meta->playtime}
+				{$game->players} hráčů, {$game->time}
 			</li>
 			<li class="list-group-item">
-				{$game->meta->publisher}, {$game->meta->published}
+				{$game->publisher}, {$game->published}
 			</li>
 		</ul>
 	</div>
@@ -64,7 +62,7 @@
 <div class="row">
 	<div class="col-md-8">
 		<ul class="hidden-xs">
-			{* <li n:foreach="$game->meta->files as $file">
+			{* <li n:foreach="$game->files as $file">
 				<a href="{$file->url}" target="_blank">{$file->name} ({$file->size})</a> {$file->date|date}
 			</li> *}
 
